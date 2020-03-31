@@ -1,0 +1,41 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<MiniReview /> rendering should render elements 1`] = `
+<styled.div
+  className="review-box"
+>
+  <Styled(styled.div)>
+    <styled.div>
+      <styled.img
+        src="/images/thumbs-down.png"
+      />
+      <styled.div>
+        <styled.div>
+          <styled.a>
+            Salvador.OKon17
+          </styled.a>
+        </styled.div>
+        <styled.div>
+          2919 hrs
+        </styled.div>
+      </styled.div>
+    </styled.div>
+    <styled.div>
+      <styled.div>
+        POSTED JAN 20TH
+      </styled.div>
+      <styled.div>
+        Voluptatem voluptatem officia et.
+      </styled.div>
+      <styled.div />
+      <ReviewRating
+        funny={309}
+        mini={true}
+        no={503}
+        post_id={89613}
+        yes={993}
+      />
+    </styled.div>
+  </Styled(styled.div)>
+</styled.div>
+`;

@@ -1,0 +1,15 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<ActiveFilters /> rendering should render elements 1`] = `
+<styled.div>
+  Filters
+  <styled.div
+    key="language"
+    onClick={[Function]}
+  >
+    <styled.div>
+      Arabic
+    </styled.div>
+  </styled.div>
+</styled.div>
+`;

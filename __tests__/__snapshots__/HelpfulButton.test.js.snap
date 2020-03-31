@@ -1,0 +1,8 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<HelpfulButton /> rendering should render elements 1`] = `
+<styled.span
+  active={false}
+  onClick={[Function]}
+/>
+`;

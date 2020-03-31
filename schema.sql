@@ -1,0 +1,5 @@
+DROP DATABASE IF EXISTS steam;
+
+CREATE DATABASE steam;
+
+USE steam;

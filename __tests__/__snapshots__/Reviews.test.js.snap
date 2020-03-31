@@ -1,0 +1,66 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Reviews component should render elements 1`] = `
+<styled.div>
+  <styled.div>
+    MOST 
+    HELPFUL
+     REVIEWS
+  </styled.div>
+  <Styled(styled.div)>
+    IN THE PAST 30 DAYS
+  </Styled(styled.div)>
+  <Review
+    key="89613"
+    review={
+      Object {
+        "content": "Voluptatem voluptatem officia et.",
+        "createdAt": "2019-05-20T01:30:23.000Z",
+        "helpful_funny_count": 309,
+        "helpful_no_count": 503,
+        "helpful_yes_count": 993,
+        "hours_played": "2919",
+        "language": "Turkish",
+        "post_id": 89613,
+        "product_count": 77,
+        "recommended": false,
+        "registration_date": "2018-11-24",
+        "review_count": 33,
+        "review_date": "2019-01-20",
+        "steam_level": 28,
+        "updatedAt": "2019-05-20T01:30:23.000Z",
+        "user_avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/blakesimkins/128.jpg",
+        "user_id": 88438,
+        "username": "Salvador.OKon17",
+      }
+    }
+    source="standard"
+  />
+  <Review
+    key="8913"
+    review={
+      Object {
+        "content": "Voluptatem voluptatem officia et.",
+        "createdAt": "2019-05-20T01:30:23.000Z",
+        "helpful_funny_count": 39,
+        "helpful_no_count": 53,
+        "helpful_yes_count": 93,
+        "hours_played": "219",
+        "language": "Spanish",
+        "post_id": 8913,
+        "product_count": 77,
+        "recommended": false,
+        "registration_date": "2018-11-23",
+        "review_count": 33,
+        "review_date": "2019-01-21",
+        "steam_level": 28,
+        "updatedAt": "2019-05-20T01:30:23.000Z",
+        "user_avatar": "https://s3.amazonaws.com/uifaces/faces/twitter/blakesimkins/128.jpg",
+        "user_id": 88435,
+        "username": "Salvador",
+      }
+    }
+    source="standard"
+  />
+</styled.div>
+`;

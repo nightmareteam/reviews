@@ -1,0 +1,21 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<RatingButtons /> rendering should render elements 1`] = `
+<styled.div>
+  <HelpfulButton
+    active={false}
+    string="Yes"
+    updateHelpfulness={[MockFunction]}
+  />
+  <HelpfulButton
+    active={false}
+    string="No"
+    updateHelpfulness={[MockFunction]}
+  />
+  <HelpfulButton
+    active={false}
+    string="Funny"
+    updateHelpfulness={[MockFunction]}
+  />
+</styled.div>
+`;

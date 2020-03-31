@@ -1,0 +1,90 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`<FilterComponent /> rendering should render elements 1`] = `
+<styled.div
+  className="FilterContainer"
+>
+  <Chart />
+  <styled.div
+    className="FilterList"
+  >
+    <Filter
+      filter={
+        Object {
+          "displayName": "Review Type",
+          "id": "recommended",
+          "options": Array [
+            Object {
+              "count": 48,
+              "displayName": "Positive",
+              "id": "1",
+            },
+            Object {
+              "count": 52,
+              "displayName": "Negative",
+              "id": "0",
+            },
+          ],
+        }
+      }
+      key="recommended"
+      setFilters={[MockFunction]}
+    />
+    <Filter
+      filter={
+        Object {
+          "displayName": "Language",
+          "id": "language",
+          "options": Array [
+            Object {
+              "count": 4,
+              "displayName": "Arabic",
+              "id": "arabic",
+            },
+            Object {
+              "count": 1,
+              "displayName": "Armenian",
+              "id": "armenian",
+            },
+          ],
+        }
+      }
+      key="language"
+      setFilters={[MockFunction]}
+    />
+    <styled.div>
+      DISPLAY AS:
+      <styled.select
+        onChange={[Function]}
+      >
+        <styled.option
+          default={true}
+          value="helpful"
+        >
+          Most Helpful
+        </styled.option>
+        <styled.option
+          default={true}
+          value="recent"
+        >
+          Recent
+        </styled.option>
+        <styled.option
+          default={true}
+          value="funny"
+        >
+          Funny
+        </styled.option>
+      </styled.select>
+    </styled.div>
+  </styled.div>
+  <styled.div>
+    Showing 
+    <Styled(styled.div)>
+      0
+    </Styled(styled.div)>
+     reviews that match the filters above
+  </styled.div>
+  <styled.div />
+</styled.div>
+`;
