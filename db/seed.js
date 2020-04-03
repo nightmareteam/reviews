@@ -34,27 +34,25 @@ function writeTenMillionGames(writer, encoding, callback) { // write 10 million 
     write();
 }
 
-// function writeManyUsers(writer, encoding, callback) { // write 80 thousands users
-//     let i = 10;
-//     let game_id = 0;
-//     function write() {
-//         let ok = true;
-//         do {
-//             i -= 1;
-//             game_id += 1;
-//             const data = `${game_id}\n`;
-//             if (i === 0) {
-//                 writer.write(data, encoding, callback);
-//             } else {
-//                 ok = writer.write(data, encoding);
-//             }
-//         } while (i > 0 && ok); // continue only when buffer not full and entries still need to be written
-//         if (i > 0) {    // if exited while loop while entries still needed to be writte, restart once drain has taken place
-//             writer.once('drain', write);
-//         }
-//     }
-//     write();
-// }
+function writeManyUsers(writer, encoding, callback) { // write 80 thousands users
+    let user_id = 0;
+    function write() {
+        let gameOk = true;
+        do {
+            user_id += 1;
+            const data = `${user_id}\n`;
+            if (user_id === 10) {
+                writer.write(data, encoding, callback);
+            } else {
+                gameOk = writer.write(data, encoding);
+            }
+        } while (user_id < 10 && gameOk);
+        if (user_id < 10) {
+            writer.once('drain', write);
+        }
+    }
+    write();
+}
 
 // function writeReviewsAndComments(writer, encoding, callback) {
 // // generate between 0 and 30 reviews per game, with less reviews more likely
@@ -91,9 +89,9 @@ writeTenMillionGames(writeGames, 'utf-8', () => {   // write users
     writeGames.end();
 });
 
-// writeManyUsers(writeUsers, 'utf-8', () => {   // write users
-//     writeUsers.end();
-// });
+writeManyUsers(writeUsers, 'utf-8', () => {   // write users
+    writeUsers.end();
+});
 
 // writeManyReviews(writeReviews, 'utf-8', () => {   // write users
 //     writeReviews.end();
