@@ -3,23 +3,27 @@ const faker = require('faker');
 const moment = require('moment');
 
 const writeGames = fs.createWriteStream('./db/games.csv');
-const writeReviews = fs.createWriteStream('reviews.csv');
+writeGames.write('game_id\n', 'utf8');
+
+const writeReviews = fs.createWriteStream('./db/reviews.csv');
+writeReviews.write('post_id,game_id\n', 'utf8');
+
 const writeUsers = fs.createWriteStream('./db/users.csv');
 const writeComments = fs.createWriteStream('./db/comments.csv');
 
 function writeTenMillionGames(writer, encoding, callback) { // write 10 million games
-    let i = 10000000;
-    let id = 0;
+    let i = 10;
+    let game_id = 0;
     function write() {
         let ok = true;
         do {
             i -= 1;
-            id += 1;
-            const data = `${id}\n`;
+            game_id += 1;
+            const data = `${game_id}\n`;
             if (i === 0) {
                 writer.write(data, encoding, callback);
             } else {
-                ok = writer.write(data,encoding);
+                ok = writer.write(data, encoding);
             }
         } while (i > 0 && ok); // continue only when buffer not full and entries still need to be written
         if (i > 0) {    // if exited while loop while entries still needed to be writte, restart once drain has taken place
@@ -29,27 +33,39 @@ function writeTenMillionGames(writer, encoding, callback) { // write 10 million 
     write();
 }
 
-function writeReviews(writer, encoding, callback) { // generate between 0 and 30 reviews per game, with 0 being much more likely
-    let i = 10000000; // iterate through each game
+function writeManyReviews(writer, encoding, callback) { // generate between 0 and 30 reviews per game, with less reviews more likely
+    let game_id = 10; // iterate through each game
+    let post_id = 0;
     function write() {
         let ok = true; // buffer not full
-        do {    // keep looping while buffer not full and entries need to be written, each loop is for each game
-            i -= 1;
-            let id = 0;
-            let reviewNum = Math.floor(Math.pow(Math.random(), 3) * Math.floor(max)); // random number between 0 and 30 with 0 being more likely
-            do {
-                const data = `${id}\n`;
+        do {    // each loop is for each game, keep looping while buffer not full and entries need to be written, 
+            game_id -= 1;
+            let reviewNum = Math.floor(Math.pow(Math.random(), 3) * Math.floor(30)); // random number between 0 and 30 with 0 being more likely
+            let user_idList = [];
+            do {    // loop through each review -- full cycle is for a single game
+                post_id += 1;
+                reviewNum -= 1;
+                const data = `${post_id},${game_id}\n`;
                 if (reviewNum === 0) {
                     writer.write(data, encoding, callback);
                 } else {
-                    ok = writer.write(data.encoding);
+                    ok = writer.write(data, encoding);
                 }
             } while (reviewNum > 0  && ok); // check status of ok here instead of in outer
-        } while (i > 0);
+            if (reviewNum > 0) {    // if exited while loop while entries still needed to be writte, restart once drain has taken place
+                writer.once('drain', write);
+            }
+        } while (game_id > 0);
     }
     write();
 }
 
-writeTenMillionGames(writeGames, 'utf-8', () => {   // write users
-    writeGames.end();
+// writeTenMillionGames(writeGames, 'utf-8', () => {   // write users
+//     writeGames.end();
+// });
+
+writeManyReviews(writeReviews, 'utf-8', () => {   // write users
+    writeReviews.end();
 });
+
+// ${recommended}${review_date}${hours_played}${content}${language}${helpful_yes_count}${helpful_no_count}${helpful_funny_count}${user_id}
