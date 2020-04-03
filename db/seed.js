@@ -40,7 +40,8 @@ function writeManyUsers(writer, encoding, callback) { // write 80 thousands user
         let gameOk = true;
         do {
             user_id += 1;
-            const data = `${user_id}\n`;
+            const reviewCount = Math.floor(Math.pow(Math.random(), 4) * Math.floor(200)); // more likely to be closer to 0
+            const data = `${user_id},${faker.internet.userName()},${faker.internet.avatar()},${Math.floor(Math.random() * Math.floor(200))},${reviewCount}\n`;
             if (user_id === 10) {
                 writer.write(data, encoding, callback);
             } else {
