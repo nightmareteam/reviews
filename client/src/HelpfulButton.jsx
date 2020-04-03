@@ -1,7 +1,7 @@
 /* eslint-disable indent */
 import React from 'react';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 
 /**
  * Component for display of individual rating buttons

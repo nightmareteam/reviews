@@ -1,6 +1,6 @@
 import React from 'react';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 import Filter from './Filter.jsx';
 import ActiveFilters from './ActiveFilters.jsx';
 import Chart from './Chart.jsx';

@@ -4,13 +4,13 @@ var DIST_DIR = path.join(__dirname, '/public');
 
 module.exports = {
   entry: `${SRC_DIR}/index.jsx`,
-  externals: {
-    "styled-components": {
-      commonjs: "styled-components",
-      commonjs2: "styled-components",
-      amd: "styled-components"
-    }
-  },
+  // externals: {
+  //   "styled-components": {
+  //     commonjs: "styled-components",
+  //     commonjs2: "styled-components",
+  //     amd: "styled-components"
+  //   }
+  // },
   output: {
     filename: 'bundle.js',
     path: DIST_DIR

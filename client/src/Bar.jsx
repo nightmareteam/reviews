@@ -1,6 +1,6 @@
 import React from 'react';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 
 const Bar = ({width, height, barMargin, reverse}) => (
   <GraphBar reverse={reverse} height={height} width={width} barMargin={barMargin}/>

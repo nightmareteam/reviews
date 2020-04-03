@@ -3,7 +3,7 @@ import React from 'react';
 import Reviews from './Reviews.jsx';
 import $ from 'jquery';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 import RecentlyPosted from './RecentlyPosted.jsx';
 import FilterComponent from './FilterComponent.jsx';
 import ModalRoot from './ModalRoot.jsx';
@@ -133,14 +133,15 @@ class ReviewsModule extends React.Component {
   /* VIEWS */
   render() {
     return (
-      <ModuleContainer className='ModuleContainer'>
+      
+<ModuleContainer className='ModuleContainer'>
         <FilterComponent sort={this.setSort.bind(this)} setFilters={this.setFilters.bind(this)} activeFilters={this.state.activeFilters} 
           filters={this.state.filters} count={this.state.count}/>
         <ReviewsContainer className='ReviewsContainer'>
           <Reviews sort={this.state.order} reviews={this.state.reviews}/>
           <RecentlyPosted reviews={this.state.recentReviews}/>
         </ReviewsContainer>
-      </ModuleContainer>
+      </ModuleContainer> 
     );
   }
 }
@@ -152,7 +153,6 @@ const ModuleContainer = styled.div`
   max-width: 940px;
   width: auto;
   height: auto;
-
 `;
 
 const ReviewsContainer = styled.div`

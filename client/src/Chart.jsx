@@ -1,7 +1,7 @@
 import React from 'react';
 import Graph from './Graph.jsx';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 import $ from 'jquery';
 
 class Chart extends React.Component {

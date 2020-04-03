@@ -1,6 +1,6 @@
 import React from 'react';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 
 /**
  * This component renders each filter in the filter selection bar.

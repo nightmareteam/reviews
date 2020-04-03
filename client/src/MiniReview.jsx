@@ -1,7 +1,7 @@
 import React from 'react';
 import moment from 'moment';
 //import styled from 'styled-components';
-const styled = window.styled;
+import styled from 'styled-components';
 import ReviewRating from './ReviewRating.jsx';
 
 /**
