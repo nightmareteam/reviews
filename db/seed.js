@@ -30,7 +30,6 @@ const writeTenMillionGames = (writer, encoding, callback) => { // write 10 milli
             } else {
                 ok = writer.write(data, encoding);
             }
-            console.log("games");
         } while (game_id < 10 && ok); // continue only when buffer not full and entries still need to be written
         if (game_id < 10) {    // if exited while loop while entries still needed to be writte, restart once drain has taken place
             writer.once('drain', write);
@@ -49,7 +48,7 @@ const writeManyReviews = () => {
     // generate reviews for a given user
         function write() {
             let reviewsOk = true;
-            do {
+            while (numReviewsForUser > 0 && reviewsOk) {
                 post_id += 1;
                 numReviewsForUser -= 1;
                 // TO DO: Make it more likely for reviews to be in English
@@ -60,7 +59,7 @@ const writeManyReviews = () => {
                 } else {
                     reviewsOk = writer.write(data, encoding);
                 }
-            } while (numReviewsForUser > 0 && reviewsOk); // continue only when buffer not full and entries still need to be written
+            } // continue only when buffer not full and entries still need to be written
             if (numReviewsForUser > 0) {    // if exited while loop while entries still needed to be writte, restart once drain has taken place
                 writer.once('drain', write);
             }
@@ -74,31 +73,54 @@ const writeManyUsers = (writer, encoding, callback) => { // write 80 thousands u
     const writeReviewsForThisUser = writeManyReviews();
     function write() {
         let gameOk = true;
-        function generateReview () { // for each user
-            user_id += 1;
-            const numReviewsForUser = Math.floor(Math.pow(Math.random(), 4) * Math.floor(200)); // more likely to be closer to 0
-            const data = `${user_id},${faker.internet.userName()},${faker.internet.avatar()},${Math.floor(Math.random() * Math.floor(200))},${numReviewsForUser}\n`;
-            if (user_id === 10) {
-                writer.write(data, encoding, callback);
-            } else {
-                gameOk = writer.write(data, encoding);
+        function makeUser () { // for each user
+            if (user_id < 10 && gameOk) {
+                user_id += 1;
+                const numReviewsForUser = Math.floor(Math.pow(Math.random(), 4) * Math.floor(200)); // more likely to be closer to 0
+                const data = `${user_id},${faker.internet.userName()},${faker.internet.avatar()},${Math.floor(Math.random() * Math.floor(200))},${numReviewsForUser}\n`;
+                writeReviewsForThisUser(writeReviews, 'utf-8', () => {
+                    if (user_id === 10) {
+                        writer.write(data, encoding, callback);
+                    } else {
+                        gameOk = writer.write(data, encoding);
+                    }
+                    makeUser();
+                }, user_id, numReviewsForUser);
             }
-            // write reviewCount number of reviews for specified user
-            writeReviewsForThisUser(writeReviews, 'utf-8', () => {
-                if(user_id < 10 && gameOk) {
-                    generateReview();
-                } else {
-                    writeReviews.end();
-                }
-            }, user_id, numReviewsForUser);
         }
-        generateReview();
+        makeUser();
         if (user_id < 10) {
             writer.once('drain', write);
+        } else {
+            writeReviews.end();
         }
     }
     write();
 }
+
+// user_id += 1;
+// const numReviewsForUser = Math.floor(Math.pow(Math.random(), 4) * Math.floor(200)); // more likely to be closer to 0
+// const data = `${user_id},${faker.internet.userName()},${faker.internet.avatar()},${Math.floor(Math.random() * Math.floor(200))},${numReviewsForUser}\n`;
+// if (user_id === 10) {
+//     writer.write(data, encoding, callback);
+// } else {
+//     gameOk = writer.write(data, encoding);
+// }
+// // write reviewCount number of reviews for specified user
+// writeReviewsForThisUser(writeReviews, 'utf-8', () => {
+//     if(user_id < 10 && gameOk) {
+//         generateReview();
+//     } else {
+//         writeReviews.end();
+//     }
+// }, user_id, numReviewsForUser);
+// }
+// generateReview();
+// if (user_id < 10) {
+// writer.once('drain', write);
+// }
+// }
+// write();
 
 const generateAllData = () => {
 // kick off data generation for all four tables
