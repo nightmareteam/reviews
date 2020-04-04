@@ -74,7 +74,7 @@ const writeManyUsers = (writer, encoding, callback) => { // write 80 thousands u
     const writeReviewsForThisUser = writeManyReviews();
     function write() {
         let gameOk = true;
-        do { // for each user
+        function generateReview () { // for each user
             user_id += 1;
             const numReviewsForUser = Math.floor(Math.pow(Math.random(), 4) * Math.floor(200)); // more likely to be closer to 0
             const data = `${user_id},${faker.internet.userName()},${faker.internet.avatar()},${Math.floor(Math.random() * Math.floor(200))},${numReviewsForUser}\n`;
@@ -85,9 +85,14 @@ const writeManyUsers = (writer, encoding, callback) => { // write 80 thousands u
             }
             // write reviewCount number of reviews for specified user
             writeReviewsForThisUser(writeReviews, 'utf-8', () => {
-                writeReviews.end();
+                if(user_id < 10 && gameOk) {
+                    generateReview();
+                } else {
+                    writeReviews.end();
+                }
             }, user_id, numReviewsForUser);
-        } while (user_id < 10 && gameOk);
+        }
+        generateReview();
         if (user_id < 10) {
             writer.once('drain', write);
         }
