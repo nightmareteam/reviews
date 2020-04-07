@@ -32,7 +32,7 @@ const writeTenMillionGames = (writer, encoding, callback) => {
 }
 
 const writeManyReviews = (writer, encoding, callback) => {
-// write 100 million reviews assigned randomly to 10 million games with games with lower ids more likely to have more reviews
+// write 25 million reviews assigned randomly to 10 million games with games with lower ids more likely to have more reviews
     let post_id = 0;
     const languages = ['Arabic', 'Armenian', 'Bosnian', 'Bulgarian', 'Croatian', 'Czech', 'Danish', 'Dutch', 'English', 'Finnish', 'French', 
         'Georgian', 'German', 'Greek', 'Hindi', 'Hungarian', 'Italian', 'Japanese', 'Korean', 'Latvian', 'Lithuanian', 'Nepali', 'Norwegian', 
@@ -40,15 +40,16 @@ const writeManyReviews = (writer, encoding, callback) => {
     function write() {
         let reviewsOk = true;
         do {
+            console.log("post/review #", post_id);
             post_id += 1;
-            const data = `${post_id},${faker.random.boolean()},${faker.date.recent(90)},${Math.floor(Math.random() * Math.floor(10000))},${faker.lorem.paragraph()},${languages[Math.floor(Math.random() * Math.floor(languages.length - 1))]},${Math.floor(Math.pow(Math.random(), 3) * Math.floor(300))},${Math.floor(Math.pow(Math.random(), 3) * Math.floor(100))},${Math.random() * Math.floor(10000000)},${Math.floor(Math.pow(Math.random(), 5) * Math.floor(10000000))}\n`;
-            if (post_id === 10000000) {
+            const data = `${post_id},${faker.random.boolean()},${faker.date.recent(90)},${Math.floor(Math.random() * Math.floor(10000))},${faker.lorem.paragraph()},${languages[Math.floor(Math.random() * Math.floor(languages.length - 1))]},${Math.floor(Math.pow(Math.random(), 3) * Math.floor(300))},${Math.floor(Math.pow(Math.random(), 3) * Math.floor(100))},${Math.random() * Math.floor(80000)},${Math.floor(Math.pow(Math.random(), 5) * Math.floor(10000000))}\n`;
+            if (post_id === 25000000) {
                 writer.write(data, encoding, callback);
             } else {
                 reviewsOk = writer.write(data, encoding);
             }
-        } while (post_id < 10000000 && reviewsOk);
-        if (post_id < 10000000) {  
+        } while (post_id < 25000000 && reviewsOk);
+        if (post_id < 25000000) {  
             writer.once('drain', write);
         }
     }
@@ -56,20 +57,21 @@ const writeManyReviews = (writer, encoding, callback) => {
 }
 
 const writeManyComments = (writer, encoding, callback) => {
-    // write 300 million comments with reviews with lower ids more likely to have reviews
+    // write 30 million comments with reviews with lower ids more likely to have reviews
         let comment_id = 0;
         function write() {
             let commentsOk = true;
             do {
+                console.log("comment #", comment_id);
                 comment_id += 1;
-                const data = `${comment_id},${faker.date.recent(90)},${faker.lorem.paragraph()},${Math.floor(Math.random(5) * Math.floor(100000000))},${Math.floor(Math.random() * Math.floor(80000000))}\n`;
-                if (comment_id === 300000000) {
+                const data = `${comment_id},${faker.date.recent(90)},${faker.lorem.paragraph()},${Math.floor(Math.random(5) * Math.floor(25000000))},${Math.floor(Math.random() * Math.floor(80000))}\n`;
+                if (comment_id === 30000000) {
                     writer.write(data, encoding, callback);
                 } else {
                     commentsOk = writer.write(data, encoding);
                 }
-            } while (comment_id < 300000000 && commentsOk);
-            if (comment_id < 300000000) {  
+            } while (comment_id < 30000000 && commentsOk);
+            if (comment_id < 30000000) {  
                 writer.once('drain', write);
             }
         }
@@ -100,14 +102,14 @@ const writeManyUsers = (writer, encoding, callback) => {
 /*************************CREATE CSV STREAMS*************************/
 // const writeGames = fs.createWriteStream('./db/games.csv');
 // const writeUsers = fs.createWriteStream('./db/users.csv');
-// const writeReviews = fs.createWriteStream('./db/reviews.csv');
-const writeComments = fs.createWriteStream('./db/comments.csv');
+const writeReviews = fs.createWriteStream('./db/reviews.csv');
+// const writeComments = fs.createWriteStream('./db/comments.csv');
 
 /**********************INITIALIZE TABLE HEADERS**********************/
 // writeGames.write('game_id\n', 'utf8');
 // writeUsers.write('user_id,username,user_avatar,product_count,review_count\n', 'utf8');
-// writeReviews.write('post_id,recommended,review_date,hours_played,content,language,helpful_yes_count,helpful_funny_count,user_id,game_id\n', 'utf8');
-writeComments.write('comment_id,comment_date,comment_content,post_id,user_id\n', 'utf8');
+writeReviews.write('post_id,recommended,review_date,hours_played,content,language,helpful_yes_count,helpful_funny_count,user_id,game_id\n', 'utf8');
+// writeComments.write('comment_id,comment_date,comment_content,post_id,user_id\n', 'utf8');
 
 // TO DO: Refactor such that all data can be seeded with one intial call
 // writeTenMillionGames(writeGames, 'utf-8', () => {   // write games
@@ -116,9 +118,9 @@ writeComments.write('comment_id,comment_date,comment_content,post_id,user_id\n',
 // writeManyUsers(writeUsers, 'utf-8', () => {  // writer users, which then kicks off reviews and comments
 //     writeUsers.end();
 // });
-// writeManyReviews(writeReviews, 'utf-8', () => {
-//     writeReviews.end();
-// });
-writeManyComments(writeComments, 'utf-8', () => {
-    writeComments.end();
+writeManyReviews(writeReviews, 'utf-8', () => {
+    writeReviews.end();
 });
+// writeManyComments(writeComments, 'utf-8', () => {
+//     writeComments.end();
+// });
