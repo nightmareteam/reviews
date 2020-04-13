@@ -1,4 +1,29 @@
 /* eslint-disable camelcase */
+
+const  { Pool } = require('pg');
+
+const pool = new Pool({
+  user: 'kc',
+  host: 'localhost',
+  database: 'reviews',
+  password: 'password',
+  port: 5432,
+});
+
+const getReviews = (request, response) => {
+  pool.query(`SELECT * FROM denormalized30m WHERE game_id = ${request.params.game_id}`, (error, data) => {
+    if (error) {
+      throw error;
+    }
+    response.send(data.rows);
+  })
+};
+
+module.exports = {
+  getReviews,
+};
+
+
 const Sequelize = require('sequelize');
 const sequelize = new Sequelize('steam', 'root', '', {
   dialect: 'mysql',
@@ -17,11 +42,11 @@ sequelize
     console.error('Unable to connect to the database:', err);
   });
 
-const getReviews = (options, callback) => {
-  Review.findAndCountAll(options)
-    .then(data => callback(null, data))
-    .catch(err => callback(err));
-};
+// const getReviews = (options, callback) => {
+//   Review.findAndCountAll(options)
+//     .then(data => callback(null, data))
+//     .catch(err => callback(err));
+// };
 
 const getLanguageFilter = (callback) => {
   Review.findAll({
@@ -74,26 +99,3 @@ module.exports.getComments = getComments;
 module.exports.createComment = createComment;
 
 
-// /* eslint-disable camelcase */
-// const  { Pool } = require('pg');
-
-// const pool = new Pool({
-//   user: 'kc',
-//   host: 'localhost',
-//   database: 'reviews',
-//   password: 'password',
-//   port: 5432,
-// });
-
-// const getReviews = (request, response) => {
-//   pool.query(`SELECT * FROM denormalized30m WHERE game_id = ${request.params.game_id}`, (error, data) => {
-//     if (error) {
-//       throw error;
-//     }
-//     response.send(data.rows);
-//   })
-// };
-
-// module.exports = {
-//   getReviews,
-// };

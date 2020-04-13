@@ -36,11 +36,12 @@ const app = express();
 const port = 3005;
 const moment = require('moment');
 const Sequelize = require('sequelize');
+const path = require('path');
 
 app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
 
-app.use(express.static(__dirname + '/../public'));
+app.use('/:game_id', express.static(path.resolve(__dirname, '..', 'public')));
 
 app.listen(port, () => {
   console.log(`Listening on ${port}`);
@@ -50,24 +51,8 @@ app.get('/test', (req, res) => {
   console.log('Working');
 });
 
-app.get('/reviews', (req, res) => {
-  const orderMap = {
-    helpful: 'helpful_yes_count',
-    funny: 'helpful_funny_count', 
-    recent: 'review_date'
-  };
-  const where = req.body.where || req.query.where;
-  const order = req.body.order || req.query.order;
-  console.log(where, order);
-  const options = {
-    where: where,
-    order: [[orderMap[order], 'DESC']]
-  };
-
-  db.getReviews(options, (err, data) => {
-    if (err) { return console.error(err); }
-    res.send(data);
-  });
+app.get('/reviews/:game_id', (req, res) => {
+  db.getReviews(req, res);
 });
 
 app.get('/recent', (req, res) => {

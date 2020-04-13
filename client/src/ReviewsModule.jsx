@@ -33,13 +33,21 @@ class ReviewsModule extends React.Component {
   }
 
   componentDidMount() {
-    this.getReviews(this.updateReviewState);
-    this.getFilters((err, data) => {
-      if (err) { return console.error('Error getting filters'); }
-      this.setState({
-        filters: data
+    // this.getReviews(this.updateReviewState);
+    fetch(`/reviews/${this.props.game_id}`)
+      .then((data) => data.json())
+      .then((reviews) => {
+        console.log(reviews);
+        this.setState({
+          reviews: reviews
+        });
       });
-    });
+    // this.getFilters((err, data) => {
+    //   if (err) { return console.error('Error getting filters'); }
+    //   this.setState({
+    //     filters: data
+    //   });
+    // });
   }
 
   /* MODELS */
@@ -98,18 +106,18 @@ class ReviewsModule extends React.Component {
    * @param {Function} callback 
    * @return {Array}
    */
-  getReviews(callback) {
-    const filters = this.state.filterSearch;
-    const order = this.state.order;
+  // getReviews(callback) {
+  //   const filters = this.state.filterSearch;
+  //   const order = this.state.order;
 
-    $.ajax({
-      url: '/reviews',
-      method: 'GET',
-      data: {where: filters, order: order},
-      success: result => callback(result),
-      error: () => console.error('Couldn\'t get reviews')
-    });
-  }
+  //   $.ajax({
+  //     url: '/reviews',
+  //     method: 'GET',
+  //     data: {where: filters, order: order},
+  //     success: result => callback(result),
+  //     error: () => console.error('Couldn\'t get reviews')
+  //   });
+  // }
 
   /**
    * Call an API to retrieve the list of available filters and respective options
@@ -135,8 +143,8 @@ class ReviewsModule extends React.Component {
     return (
       
 <ModuleContainer className='ModuleContainer'>
-        <FilterComponent sort={this.setSort.bind(this)} setFilters={this.setFilters.bind(this)} activeFilters={this.state.activeFilters} 
-          filters={this.state.filters} count={this.state.count}/>
+        {/* <FilterComponent sort={this.setSort.bind(this)} setFilters={this.setFilters.bind(this)} activeFilters={this.state.activeFilters} 
+          filters={this.state.filters} count={this.state.count}/> */}
         <ReviewsContainer className='ReviewsContainer'>
           <Reviews sort={this.state.order} reviews={this.state.reviews}/>
           <RecentlyPosted reviews={this.state.recentReviews}/>
