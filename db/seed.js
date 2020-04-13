@@ -127,7 +127,7 @@ const writeDenormalizedTable = (writer, encoding, callback) => {
 // const writeUsers = fs.createWriteStream('./db/users.csv');
 // const writeReviews = fs.createWriteStream('./db/reviews.csv');
 // const writeComments = fs.createWriteStream('./db/comments.csv');
-const writeAll = fs.createWriteStream('./db/denormalized.csv');
+const writeAll = fs.createWriteStream('./db/denormalized30m.csv');
 
 /**********************INITIALIZE TABLE HEADERS**********************/
 // writeGames.write('game_id\n', 'utf8');
