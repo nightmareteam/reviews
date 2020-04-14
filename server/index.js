@@ -29,6 +29,7 @@
 
 
 /* eslint-disable camelcase */
+require('newrelic');
 const express = require('express');
 const parser = require('body-parser');
 const db = require('../db');

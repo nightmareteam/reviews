@@ -34,7 +34,8 @@ class ReviewsModule extends React.Component {
 
   componentDidMount() {
     // this.getReviews(this.updateReviewState);
-    fetch(`/reviews/${this.props.game_id}`)
+    const game_id = this.props.game_id;
+    fetch(`/reviews/${game_id}`)
       .then((data) => data.json())
       .then((reviews) => {
         console.log(reviews);
