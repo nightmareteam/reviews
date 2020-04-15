@@ -130,13 +130,13 @@ class ReviewsModule extends React.Component {
   getFilters(callback) {
     const game_id = this.game_id;
 
-    $.ajax({
-      url: '/reviews/filters',
-      method: 'GET',
-      data: { game_id },
-      success: (data) => callback(null, data), 
-      error: (err) => console.error('Error getting filter', err)
-    });
+    // $.ajax({
+    //   url: '/reviews/filters',
+    //   method: 'GET',
+    //   data: { game_id },
+    //   success: (data) => callback(null, data), 
+    //   error: (err) => console.error('Error getting filter', err)
+    // });
   }
 
   /* VIEWS */
