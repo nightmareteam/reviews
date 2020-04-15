@@ -38,6 +38,8 @@ const port = 3005;
 const moment = require('moment');
 const Sequelize = require('sequelize');
 const path = require('path');
+const cors = require('cors');
+
 
 app.use(parser.json());
 app.use(parser.urlencoded({extended: true}));
@@ -55,6 +57,14 @@ app.get('/test', (req, res) => {
 app.get('/reviews/:game_id', (req, res) => {
   db.getReviews(req, res);
 });
+
+app.get('/api/bundle.js', (req, res) => {
+  res.sendFile(path.resolve(__dirname, '..', 'public', 'bundle.js'));
+});
+
+// app.get('/bundle', (req, res) => {
+//   res.sendFile(path.resolve(__dirname, '..', 'public', 'bundle.js'));
+// });
 
 app.get('/recent', (req, res) => {
   console.log('PULLING RECENT');
