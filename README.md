@@ -1,6 +1,6 @@
 # Nightmare Reviews Tracker
 
-A reviews component for a game marketplace reviews module. Mimics visual design of Steam.
+Modified from legacy code and still undergoing refactoring. A reviews component for a game marketplace reviews module. Mimics visual design of Steam.
 
 ## For Related Projects:
 
@@ -17,14 +17,7 @@ A reviews component for a game marketplace reviews module. Mimics visual design 
 ```bash
 npm install
 npm run seed
-npm run build
+npm run react-dev
 npm start
 ```
 Navigate to localhost:3005
-
-## Requirements
-
-An `nvmrc` file is included if using [nvm](https://github.com/creationix/nvm).
-
-- Node 6.13.0
-- etc
