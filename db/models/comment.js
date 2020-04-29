@@ -4,12 +4,7 @@ const Sequelize = require('sequelize');
 module.exports = (sequelize) => {
   
   return sequelize.define('comment', {
-  /* REVIEW FIELDS */
-    // post_id: {
-    //   type: Sequelize.INTEGER,
-    //   allowNull: false,
-    //   primaryKey: false
-    // }, 
+
     comment_id: {
       type: Sequelize.INTEGER,
       allowNull: false,

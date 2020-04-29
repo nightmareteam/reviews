@@ -17,7 +17,7 @@ app.listen(port, () => {
 });
 
 app.get('/test', (req, res) => {
-  console.log('Working');
+  res.send('Working');
 });
 
 app.get('/reviews', (req, res) => {
